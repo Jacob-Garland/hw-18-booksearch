@@ -2,9 +2,21 @@ import express from 'express';
 import path from 'node:path';
 import db from './config/connection.js';
 import routes from './routes/index.js';
+import { ApolloServer } from '@apollo/server';
+import typeDefs, resolvers from './schemas/index.js';
+import { expressMiddleware } from '@apollo/server/express4';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+});
+
+await server.start();
+
+app.use('/graphql', expressMiddleware(server));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
