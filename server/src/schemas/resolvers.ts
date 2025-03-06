@@ -14,18 +14,6 @@ const resolvers = {
         }
         throw new Error('You need to be logged in!');
       },
-      getSingleUser: async (_: any, args: { id?: string; username?: string }, context: Context) => {
-        const foundUser = await User.findOne({
-          $or: [
-            { _id: context.user ? context.user._id : args.id },
-            { username: args.username },
-          ],
-        });
-        if (!foundUser) {
-          throw new AuthenticationError('Cannot find a user with this id!');
-        }
-        return foundUser;
-      },
     },
     Mutation: {
       createUser: async (_: any, args: { username: string; password: string }) => {

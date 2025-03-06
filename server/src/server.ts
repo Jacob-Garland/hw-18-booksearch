@@ -33,9 +33,11 @@ async function startApolloServer() {
 
   app.use(routes);
 
-  db.once('open', () => {
-    app.listen(PORT, () => console.log(`🌍 Now listening on localhost:${PORT}`));
-  });
+  db().then((connection) => {
+    connection.once('open', () => {
+      app.listen(PORT, () => console.log(`🌍 Now listening on localhost:${PORT}`));
+    });
+  }).catch((err) => console.error("Error connecting to the database:", err));
 }
 
 startApolloServer().catch((err) => console.error("Error starting server:", err));
