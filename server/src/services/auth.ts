@@ -15,7 +15,7 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
 
     const secretKey = process.env.JWT_SECRET_KEY || '';
 
-    jwt.verify(token, secretKey, (err: jwt.VerifyErrors | null, user: any) => {
+    jwt.verify(token, secretKey, (err: any, user: any) => {
       if (err) {
         return res.sendStatus(403); // Forbidden
       }

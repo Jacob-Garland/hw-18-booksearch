@@ -7,9 +7,7 @@ import typeDefs from './schemas/typeDefs.js';
 import resolvers from './schemas/resolvers.js';
 import { expressMiddleware } from '@apollo/server/express4';
 import cors from 'cors';
-import dotenv from 'dotenv';
 
-dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3001;
 
