@@ -7,6 +7,9 @@ import typeDefs from './schemas/typeDefs.js';
 import resolvers from './schemas/resolvers.js';
 import { expressMiddleware } from '@apollo/server/express4';
 import cors from 'cors';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -26,16 +29,16 @@ async function startApolloServer() {
 
   // if we're in production, serve client/build as static assets
   if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, '../client/build')));
+    app.use(express.static(path.join(__dirname, '../../client/dist')));
   }
 
   app.use(routes);
 
-  db().then((connection) => {
-    connection.once('open', () => {
-      app.listen(PORT, () => console.log(`🌍 Now listening on localhost:${PORT}`));
-    });
-  }).catch((err) => console.error("Error connecting to the database:", err));
+  db().then(() => {
+    app.listen(PORT, () => 
+      console.log(`🌍 Now listening on http://localhost:${PORT}`),
+    );
+  });
 }
 
 startApolloServer().catch((err) => console.error("Error starting server:", err));
