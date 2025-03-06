@@ -1,7 +1,7 @@
 import User from '../models/User.js';
 import { signToken } from '../services/auth.js';
 
-export const resolvers = {
+const resolvers = {
     Query: {
       getSingleUser: async (_: any, variables: { id?: string; username?: string }, req: any) => {
         const foundUser = await User.findOne({
@@ -27,3 +27,5 @@ export const resolvers = {
       },
     },
 };
+
+export default resolvers;
